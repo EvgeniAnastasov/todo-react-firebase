@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Todo } from './Todo';
 
 import { db } from './firebase'
-import { query, collection, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore'
+import { query, collection, onSnapshot, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 
 function App() {
 
@@ -37,6 +37,12 @@ function App() {
 		await deleteDoc(doc(db, 'todos', id))
 	}
 
+	const toggleTodo = async (todo) => {
+		await updateDoc(doc(db, 'todos', todo.id), {
+			completed: !todo.completed
+		})
+	}
+
 	return (
 		<div className='main'>
 			<h1>Todo Demo</h1>
@@ -58,7 +64,9 @@ function App() {
 					<Todo
 						key={index}
 						todo={todo}
-						deleteTodo={deleteTodo} />))}
+						deleteTodo={deleteTodo}
+						toggleTodo={toggleTodo}
+					/>))}
 
 			</ul>
 			{todos.length < 1
