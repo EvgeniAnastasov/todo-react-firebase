@@ -32,7 +32,41 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+/* My */
+
+body {
+  border: 1px dotted black;
+  text-align: center;
+}
+
+.main {
+  background-color: #61dafb;
+}
+
+ul {
+  display: inline-block;
+  text-align: left;
+  padding-right: 50px;
+}
+
+li {
+  list-style-type: none;
+
+}
+
+.todo {
+  display: flex;
+  background-color: coral;
+  padding: 0 5px;
+}
+
+.container {
+  display: flex;
+  /* gap: 1rem; */
 }
