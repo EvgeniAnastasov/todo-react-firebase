@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Todo } from './Todo';
 
 import { db } from './firebase'
-import { query, collection, onSnapshot, addDoc } from 'firebase/firestore'
+import { query, collection, onSnapshot, addDoc, deleteDoc, doc } from 'firebase/firestore'
 
 function App() {
 
@@ -33,6 +33,10 @@ function App() {
 		setInput('')
 	}
 
+	const deleteTodo = async (id) => {
+		await deleteDoc(doc(db, 'todos', id))
+	}
+
 	return (
 		<div className='main'>
 			<h1>Todo Demo</h1>
@@ -50,7 +54,11 @@ function App() {
 			</form>
 
 			<ul>
-				{todos.map((todo, index) => (<Todo key={index} todo={todo} />))}
+				{todos.map((todo, index) => (
+					<Todo
+						key={index}
+						todo={todo}
+						deleteTodo={deleteTodo} />))}
 
 			</ul>
 			{todos.length < 1

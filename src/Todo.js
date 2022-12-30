@@ -1,6 +1,6 @@
 
 
-export const Todo = ({ todo }) => {
+export const Todo = ({ todo, deleteTodo }) => {
     return (
         <div className="container">
             <div className="todo">
@@ -8,7 +8,7 @@ export const Todo = ({ todo }) => {
                 <li>{todo.text}</li>
             </div>
 
-            <button>Delete</button>
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
         </div>
 
     )
