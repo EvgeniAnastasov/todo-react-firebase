@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Todo } from './Todo';
 
 import { db } from './firebase'
-import { query, collection, onSnapshot, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { query, collection, onSnapshot, addDoc, deleteDoc, doc, updateDoc, serverTimestamp, orderBy } from 'firebase/firestore'
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
 	const [input, setInput] = useState('')
 
 	useEffect(() => {
-		const q = query(collection(db, 'todos'))
+		const q = query(collection(db, 'todos'), orderBy('timestamp', 'desc'))
 		const unsubscribe = onSnapshot(q, (querySnapshot) => {
 			let todosArr = []
 			querySnapshot.forEach((doc) => {
@@ -24,11 +24,12 @@ function App() {
 	}, [])
 
 	const addTodo = async (e) => {
-		e.preventDefault(e)
+		e.preventDefault()
 
 		await addDoc(collection(db, 'todos'), {
 			text: input,
-			completed: false
+			completed: false,
+			timestamp: serverTimestamp()
 		})
 		setInput('')
 	}
